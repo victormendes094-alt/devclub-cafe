@@ -4,52 +4,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="DevClub Café - o melhor café da região para quem programa.">
-    <link rel="stylesheet" href="style.css">
+    <title>DevClub Café</title>
+    <meta name="description" content="DevClub Café - cafeteria fictícia para quem programa. Landing page responsiva com carrinho em JavaScript.">
+
+    <!-- Open Graph: deixa o link bonito quando compartilhado no LinkedIn/WhatsApp.
+         Depois de publicar, troque o og:image pelo endereço completo (https://...) da imagem. -->
+    <meta property="og:title" content="DevClub Café">
+    <meta property="og:description" content="Code com o melhor café da região. Landing page responsiva feita com HTML, CSS e JavaScript.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="imagens/home-img.jpg">
+
+    <link rel="icon" type="image/png" href="imagens/logo.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- CORREÇÃO: removidas as fontes Righteous e Sarala, que não eram usadas -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;700&display=swap" rel="stylesheet">
-    <title>DevClub Café</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
 </head>
 
 <body>
+    <!-- Ícones SVG definidos uma vez e reaproveitados com <use href="#..."> -->
+    <svg class="sprite" aria-hidden="true">
+        <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <circle cx="11" cy="11" r="7" />
+            <path d="m20 20-3.5-3.5" />
+        </symbol>
+        <symbol id="i-cart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="9" cy="20" r="1.5" />
+            <circle cx="18" cy="20" r="1.5" />
+            <path d="M2 3h3l2.6 12.2a2 2 0 0 0 2 1.6h8.2a2 2 0 0 0 2-1.6L21.5 7H6" />
+        </symbol>
+        <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M3 6h18M3 12h18M3 18h18" />
+        </symbol>
+        <symbol id="i-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M6 6l12 12M18 6 6 18" />
+        </symbol>
+        <symbol id="i-star" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5-4.8-4.6 6.6-.9z" />
+        </symbol>
+        <symbol id="i-star-half" viewBox="0 0 24 24">
+            <path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5-4.8-4.6 6.6-.9z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+            <path d="M12 2.5v14.9l-5.9 3.1 1.2-6.5-4.8-4.6 6.6-.9z" fill="currentColor" />
+        </symbol>
+        <symbol id="i-instagram" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="18" height="18" rx="5" />
+            <circle cx="12" cy="12" r="4" />
+            <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" />
+        </symbol>
+        <symbol id="i-facebook" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round">
+            <path d="M14 8h3V4h-3a4 4 0 0 0-4 4v3H7v4h3v7h4v-7h3l1-4h-4V8.5a.5.5 0 0 1 .5-.5z" />
+        </symbol>
+        <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M4 4h4.5L20 20h-4.5zM20 4l-6.6 7.2M4 20l6.6-7.2" />
+        </symbol>
+    </svg>
+
     <header class="header">
         <div class="container">
             <a href="#home" class="logo">
-                <!-- CORREÇÃO: arquivo renomeado de logo(1).png para logo.png -->
                 <img src="./imagens/logo.png" alt="DevClub Café">
             </a>
 
-            <nav class="navbar">
+            <nav class="navbar" id="navbar">
                 <a href="#home">Home</a>
                 <a href="#about">Sobre</a>
                 <a href="#menu">Menu</a>
                 <a href="#review">Avaliações</a>
                 <a href="#address">Endereço</a>
-            </nav> <!-- CORREÇÃO: era </nav class> -->
+            </nav>
 
-            <!-- CORREÇÃO: ícones clicáveis viraram <button> com aria-label (acessibilidade) -->
             <div class="icons">
-                <button type="button" aria-label="Buscar">
-                    <img width="30" height="30" src="https://img.icons8.com/ios-filled/50/ffffff/search--v1.png" alt="">
+                <button type="button" class="icon-btn" id="search-btn" aria-label="Buscar no menu" aria-expanded="false">
+                    <svg><use href="#i-search" /></svg>
                 </button>
-                <button type="button" aria-label="Carrinho de compras">
-                    <img width="30" height="30" src="https://img.icons8.com/ios-glyphs/30/ffffff/shopping-cart--v1.png" alt="">
+                <button type="button" class="icon-btn" id="cart-btn" aria-label="Abrir carrinho">
+                    <svg><use href="#i-cart" /></svg>
+                    <span class="cart-count" id="cart-count" hidden>0</span>
+                </button>
+                <button type="button" class="icon-btn" id="menu-btn" aria-label="Abrir menu" aria-expanded="false">
+                    <svg><use href="#i-menu" /></svg>
                 </button>
             </div>
+
+            <form class="search-form" id="search-form" role="search">
+                <label for="search-input" class="sr-only">Buscar no menu</label>
+                <input type="search" id="search-input" placeholder="Buscar no menu... ex: expresso">
+            </form>
         </div>
     </header>
 
     <main>
-        <!-- CORREÇÃO: id era "#home"; o # não faz parte do id -->
         <section class="home" id="home">
             <div class="container">
                 <div class="content">
-                    <h3>Code com o melhor café da região</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti, laboriosam consectetur
-                        voluptates qui sunt exercitationem sint. Voluptas, quibusdam! Voluptas sed architecto repellat
-                        ab, vel consectetur fugiat exercitationem possimus earum.</p>
+                    <h1>Code com o melhor café da região</h1>
+                    <p>Grãos selecionados, torra artesanal e Wi-Fi rápido. O lugar perfeito para tirar aquele bug da
+                        cabeça com uma xícara quente do lado.</p>
                     <a href="#menu" class="btn">Pegue o seu agora</a>
                 </div>
             </div>
@@ -59,136 +110,137 @@
             <h2 class="title">Sobre <span>Nós</span></h2>
             <div class="row">
                 <div class="container-image">
-                    <img src="./imagens/about-img.jpg" alt="Interior da cafeteria">
+                    <img src="./imagens/about-img.jpg" alt="Barista preparando café no balcão">
                 </div>
                 <div class="content">
                     <h3>O que faz nosso café especial</h3>
-                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis cumque quam vel
-                        exercitationem quae eum autem nulla quisquam. Necessitatibus, magnam repudiandae accusamus autem
-                        optio dolores reprehenderit maiores ipsum neque asperiores.</p>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus ad molestias officiis illo
-                        inventore quo amet aliquam quisquam. Architecto sed neque eius odio labore ratione voluptatum!
-                        Quia voluptates a officia?</p>
-                    <a href="#menu" class="btn">Saiba mais</a>
+                    <p>Trabalhamos com grãos 100% arábica de pequenos produtores do Espírito Santo e de Minas Gerais.
+                        Cada lote é torrado aqui mesmo, em pequenas quantidades, para chegar à sua xícara no ponto
+                        certo.</p>
+                    <p>Mais que uma cafeteria, somos um ponto de encontro para quem estuda e trabalha com tecnologia:
+                        mesas com tomada, ambiente tranquilo e um cardápio pensado para longas sessões de código.</p>
+                    <a href="#review" class="btn">Saiba mais</a>
                 </div>
             </div>
         </section>
 
         <section class="menu container" id="menu">
             <h2 class="title">Nosso <span>Menu</span></h2>
-            <div class="box-container">
-                <div class="box">
+            <div class="box-container" id="menu-list">
+                <div class="box" data-name="Café Coado" data-price="15.99">
                     <img src="./imagens/menu-1.png" alt="Xícara de café coado">
                     <h3>Café Coado</h3>
                     <div class="price">R$ 15,99 <span>R$ 20,99</span></div>
-                    <a href="#" class="btn">Adicione ao carrinho</a>
+                    <button type="button" class="btn add-cart">Adicione ao carrinho</button>
                 </div>
-                <div class="box">
+                <div class="box" data-name="Café Meio Amargo" data-price="11.99">
                     <img src="./imagens/menu-2.png" alt="Xícara de café meio amargo">
                     <h3>Café Meio Amargo</h3>
                     <div class="price">R$ 11,99 <span>R$ 15,99</span></div>
-                    <a href="#" class="btn">Adicione ao carrinho</a>
+                    <button type="button" class="btn add-cart">Adicione ao carrinho</button>
                 </div>
-                <div class="box">
+                <div class="box" data-name="Café Médio" data-price="10.99">
                     <img src="./imagens/menu-3.png" alt="Xícara de café médio">
                     <h3>Café Médio</h3>
                     <div class="price">R$ 10,99 <span>R$ 13,99</span></div>
-                    <a href="#" class="btn">Adicione ao carrinho</a>
+                    <button type="button" class="btn add-cart">Adicione ao carrinho</button>
                 </div>
-                <div class="box">
+                <div class="box" data-name="Nescau Quente" data-price="5.99">
                     <img src="./imagens/menu-4.png" alt="Caneca de Nescau quente">
                     <h3>Nescau Quente</h3>
                     <div class="price">R$ 5,99 <span>R$ 10,99</span></div>
-                    <a href="#" class="btn">Adicione ao carrinho</a>
+                    <button type="button" class="btn add-cart">Adicione ao carrinho</button>
                 </div>
-                <div class="box">
+                <div class="box" data-name="Café Expresso" data-price="4.99">
                     <img src="./imagens/menu-5.png" alt="Xícara de café expresso">
                     <h3>Café Expresso</h3>
                     <div class="price">R$ 4,99 <span>R$ 5,99</span></div>
-                    <a href="#" class="btn">Adicione ao carrinho</a>
+                    <button type="button" class="btn add-cart">Adicione ao carrinho</button>
                 </div>
-                <div class="box">
+                <div class="box" data-name="Cappuccino" data-price="9.99">
                     <img src="./imagens/menu-6.png" alt="Xícara de cappuccino">
                     <h3>Cappuccino</h3>
-                    <div class="price">R$ 1,99 <span>R$ 3,99</span></div>
-                    <a href="#" class="btn">Adicione ao carrinho</a>
+                    <div class="price">R$ 9,99 <span>R$ 12,99</span></div>
+                    <button type="button" class="btn add-cart">Adicione ao carrinho</button>
                 </div>
             </div>
+            <p class="empty-search" id="empty-search" hidden>Nenhum item encontrado. Tente outro nome.</p>
         </section>
 
         <section class="review container" id="review">
-            <!-- CORREÇÃO: faltava class="title" (o título ficava preto no fundo preto, invisível) -->
             <h2 class="title">Nossos <span>Clientes</span></h2>
 
             <div class="box-container">
                 <div class="box">
                     <img src="./imagens/quote-img.png" alt="" class="quote">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus, tempore quod ullam
-                        voluptas veritatis fugiat fugit sunt fuga adipisci ex, optio minus eius veniam explicabo labore
-                        voluptates maiores dolores! Dolor.</p>
+                    <p>"Virou meu escritório oficial. O expresso é forte do jeito que eu gosto e a internet nunca me
+                        deixou na mão durante as reuniões."</p>
                     <img src="./imagens/pic-1.png" alt="Foto de João da Silva" class="user">
                     <h3>João da Silva</h3>
-                    <!-- CORREÇÃO: as estrelas agora ficam DENTRO da div .stars -->
-                    <div class="stars" aria-label="Nota 4,5 de 5">
-                        <img width="30" height="30" src="https://img.icons8.com/ios-filled/30/ffffff/star--v1.png" alt="">
-                        <img width="30" height="30" src="https://img.icons8.com/ios-filled/30/ffffff/star--v1.png" alt="">
-                        <img width="30" height="30" src="https://img.icons8.com/ios-filled/30/ffffff/star--v1.png" alt="">
-                        <img width="30" height="30" src="https://img.icons8.com/ios-filled/30/ffffff/star--v1.png" alt="">
-                        <img width="30" height="30" src="https://img.icons8.com/ios-filled/30/ffffff/star-half-empty.png" alt="">
+                    <div class="stars" role="img" aria-label="Nota 4,5 de 5">
+                        <svg><use href="#i-star" /></svg><svg><use href="#i-star" /></svg><svg><use href="#i-star" /></svg><svg><use href="#i-star" /></svg><svg><use href="#i-star-half" /></svg>
                     </div>
                 </div>
 
                 <div class="box">
                     <img src="./imagens/quote-img.png" alt="" class="quote">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus, tempore quod ullam
-                        voluptas veritatis fugiat fugit sunt fuga adipisci ex, optio minus eius veniam explicabo labore
-                        voluptates maiores dolores! Dolor.</p>
+                    <p>"Ambiente aconchegante e atendimento excelente. O cappuccino é o melhor que já tomei, e o preço
+                        é justo para a qualidade."</p>
                     <img src="./imagens/pic-2.png" alt="Foto de Rayssa Amaral" class="user">
                     <h3>Rayssa Amaral</h3>
-                    <div class="stars" aria-label="Nota 4,5 de 5">
-                        <img width="30" height="30" src="https://img.icons8.com/ios-filled/30/ffffff/star--v1.png" alt="">
-                        <img width="30" height="30" src="https://img.icons8.com/ios-filled/30/ffffff/star--v1.png" alt="">
-                        <img width="30" height="30" src="https://img.icons8.com/ios-filled/30/ffffff/star--v1.png" alt="">
-                        <img width="30" height="30" src="https://img.icons8.com/ios-filled/30/ffffff/star--v1.png" alt="">
-                        <img width="30" height="30" src="https://img.icons8.com/ios-filled/30/ffffff/star-half-empty.png" alt="">
+                    <div class="stars" role="img" aria-label="Nota 5 de 5">
+                        <svg><use href="#i-star" /></svg><svg><use href="#i-star" /></svg><svg><use href="#i-star" /></svg><svg><use href="#i-star" /></svg><svg><use href="#i-star" /></svg>
                     </div>
                 </div>
 
                 <div class="box">
                     <img src="./imagens/quote-img.png" alt="" class="quote">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus, tempore quod ullam
-                        voluptas veritatis fugiat fugit sunt fuga adipisci ex, optio minus eius veniam explicabo labore
-                        voluptates maiores dolores! Dolor.</p>
+                    <p>"Passo as tardes estudando aqui. Tomada em todas as mesas, café coado fresquinho e silêncio na
+                        medida certa para focar."</p>
                     <img src="./imagens/pic-3.png" alt="Foto de Victor Mendes" class="user">
                     <h3>Victor Mendes</h3>
-                    <div class="stars" aria-label="Nota 4,5 de 5">
-                        <img width="30" height="30" src="https://img.icons8.com/ios-filled/30/ffffff/star--v1.png" alt="">
-                        <img width="30" height="30" src="https://img.icons8.com/ios-filled/30/ffffff/star--v1.png" alt="">
-                        <img width="30" height="30" src="https://img.icons8.com/ios-filled/30/ffffff/star--v1.png" alt="">
-                        <img width="30" height="30" src="https://img.icons8.com/ios-filled/30/ffffff/star--v1.png" alt="">
-                        <img width="30" height="30" src="https://img.icons8.com/ios-filled/30/ffffff/star-half-empty.png" alt="">
+                    <div class="stars" role="img" aria-label="Nota 4,5 de 5">
+                        <svg><use href="#i-star" /></svg><svg><use href="#i-star" /></svg><svg><use href="#i-star" /></svg><svg><use href="#i-star" /></svg><svg><use href="#i-star-half" /></svg>
                     </div>
                 </div>
             </div>
-        </section> <!-- CORREÇÃO: review fechado aqui; antes ele englobava endereço e rodapé -->
+        </section>
 
         <section class="address container" id="address">
             <h2 class="title">Nosso <span>Endereço</span></h2>
-            <iframe title="Mapa com a localização da cafeteria"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14979.01814558451!2d-40.27647724458008!3d-20.185943299999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xb81ee54524bb09%3A0xa706a55f9f3b42a6!2sCaf%C3%A9%20Arrumado%20(Colina%20de%20Laranjeiras)%20-%20P%C3%A3o%2C%20Caf%C3%A9%20e%20Cuidado!5e0!3m2!1spt-BR!2sbr!4v1745574970108!5m2!1spt-BR!2sbr"
+            <p class="address-info">Rua dos Programadores, 404 – Centro, Vitória/ES<br>Segunda a sábado, das 7h às 20h</p>
+            <iframe title="Mapa do centro de Vitória/ES"
+                src="https://maps.google.com/maps?q=Vit%C3%B3ria%2C%20ES&z=13&output=embed"
                 allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </section>
     </main>
 
-    <!-- CORREÇÃO: rodapé virou <footer>, com links e texto de copyright -->
     <footer class="footer container">
         <div class="share">
-            <a href="#" aria-label="Instagram"><img width="30" height="30" src="https://img.icons8.com/ios-glyphs/30/ffffff/instagram-new.png" alt=""></a>
-            <a href="#" aria-label="Facebook"><img width="30" height="30" src="https://img.icons8.com/ios-glyphs/30/ffffff/facebook.png" alt=""></a>
-            <a href="#" aria-label="X (Twitter)"><img width="30" height="30" src="https://img.icons8.com/ios-glyphs/30/ffffff/twitterx--v1.png" alt=""></a>
+            <a href="#" aria-label="Instagram"><svg><use href="#i-instagram" /></svg></a>
+            <a href="#" aria-label="Facebook"><svg><use href="#i-facebook" /></svg></a>
+            <a href="#" aria-label="X (Twitter)"><svg><use href="#i-x" /></svg></a>
         </div>
-        <p class="credit">© 2026 DevClub Café. Todos os direitos reservados.</p>
+        <p class="credit">DevClub Café é uma cafeteria fictícia, criada como projeto de estudo por Victor Mendes.</p>
     </footer>
+
+    <!-- Carrinho lateral (aberto pelo ícone do carrinho) -->
+    <div class="overlay" id="overlay" hidden></div>
+    <aside class="cart" id="cart" aria-label="Carrinho de compras" aria-hidden="true">
+        <div class="cart-header">
+            <h2>Seu carrinho</h2>
+            <button type="button" class="icon-btn" id="cart-close" aria-label="Fechar carrinho">
+                <svg><use href="#i-close" /></svg>
+            </button>
+        </div>
+        <ul class="cart-items" id="cart-items"></ul>
+        <p class="cart-empty" id="cart-empty">Seu carrinho está vazio.</p>
+        <div class="cart-footer">
+            <p class="cart-total">Total: <strong id="cart-total">R$ 0,00</strong></p>
+            <button type="button" class="btn" id="checkout-btn">Finalizar pedido</button>
+            <p class="cart-message" id="cart-message" role="status"></p>
+        </div>
+    </aside>
 </body>
 
 </html>

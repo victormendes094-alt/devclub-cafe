@@ -1,20 +1,17 @@
 :root {
     --main-color: #d3ad7f;
-    --black: #13131a; /* CORREÇÃO: era "var#13131a" (inválido) */
-    --bg: #010103;    /* CORREÇÃO: era "var #010103" (inválido) */
+    --black: #13131a;
+    --bg: #010103;
     --border: 0.1rem solid rgba(255, 255, 255, 0.3);
+    --header-height: 8rem;
     font-size: 62.5%; /* = 10px, mas respeita o tamanho de fonte escolhido pelo usuário */
 }
 
-/* CORREÇÃO: âncoras não ficam mais escondidas atrás do header fixo + rolagem suave */
 html {
     scroll-behavior: smooth;
     scroll-padding-top: 9rem;
 }
 
-/* CORREÇÃO: removidos daqui "outline: none" (sumia o foco do teclado),
-   "text-transform: capitalize" (capitalizava todos os textos) e
-   "transition" (aplicada em tudo, pesava a página) */
 * {
     margin: 0;
     padding: 0;
@@ -26,20 +23,48 @@ html {
 
 body {
     background-color: var(--bg);
+    color: #fff;
 }
 
-/* Foco visível só para quem navega pelo teclado */
+button {
+    font: inherit;
+    color: inherit;
+}
+
+img {
+    max-width: 100%;
+}
+
 :focus-visible {
     outline: 0.2rem solid var(--main-color);
     outline-offset: 0.3rem;
 }
 
-/* NOVO: classe que limita a largura do conteúdo (antes isso era feito no "section") */
+/* Esconde visualmente, mas mantém para leitores de tela */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
+/* Sprite de ícones: precisa existir no DOM, mas sem ocupar espaço */
+.sprite {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+}
+
 .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 3rem 2rem;
 }
+
+/* ---------- Header ---------- */
 
 .header {
     position: fixed;
@@ -52,11 +77,17 @@ body {
 }
 
 .header .container {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-top: 1.5rem;
-    padding-bottom: 1.5rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.logo img {
+    display: block;
+    height: 6rem;
 }
 
 .navbar a {
@@ -69,27 +100,82 @@ body {
     transition: color 0.2s, border-color 0.2s;
 }
 
-/* CORREÇÃO: o hover não muda mais font-size/padding (fazia o menu "pular") */
 .navbar a:hover {
     color: var(--main-color);
     border-bottom-color: var(--main-color);
 }
 
-.icons button {
+.icons {
+    display: flex;
+    gap: 1rem;
+}
+
+.icon-btn {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 4.4rem;
+    height: 4.4rem;
     background: none;
-    margin: 1rem;
+    color: #fff;
     cursor: pointer;
+    transition: color 0.2s, transform 0.2s;
 }
 
-.icons img {
-    display: block;
-    transition: transform 0.2s;
+.icon-btn svg {
+    width: 2.8rem;
+    height: 2.8rem;
 }
 
-/* CORREÇÃO: scale no lugar de mudar width/height (não empurra o layout) */
-.icons button:hover img {
-    transform: scale(1.3);
+.icon-btn:hover {
+    color: var(--main-color);
+    transform: scale(1.1);
 }
+
+/* Botão hambúrguer só aparece no celular */
+#menu-btn {
+    display: none;
+}
+
+.cart-count {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 2rem;
+    height: 2rem;
+    padding: 0 0.5rem;
+    border-radius: 1rem;
+    background: var(--main-color);
+    color: var(--bg);
+    font-size: 1.2rem;
+    font-weight: 700;
+    line-height: 2rem;
+}
+
+/* Barra de busca que desce do header */
+.search-form {
+    position: absolute;
+    top: 100%;
+    right: 2rem;
+    width: min(50rem, calc(100% - 4rem));
+    background: #fff;
+    clip-path: inset(0 0 100% 0);
+    transition: clip-path 0.2s;
+}
+
+.search-form.active {
+    clip-path: inset(0 0 0 0);
+}
+
+.search-form input {
+    width: 100%;
+    padding: 1.5rem;
+    font-size: 1.6rem;
+    color: var(--black);
+    background: none;
+}
+
+/* ---------- Botão padrão ---------- */
 
 .btn {
     background: var(--main-color);
@@ -99,12 +185,14 @@ body {
     cursor: pointer;
     margin-top: 1rem;
     display: inline-block;
-    transition: letter-spacing 0.2s;
+    transition: letter-spacing 0.2s, background-color 0.2s;
 }
 
 .btn:hover {
     letter-spacing: 0.1rem;
 }
+
+/* ---------- Home ---------- */
 
 .home {
     background: url("./imagens/home-img.jpg") center / cover;
@@ -114,25 +202,27 @@ body {
     display: flex;
     align-items: center;
     min-height: 100vh;
+    padding-top: calc(var(--header-height) + 3rem);
 }
 
 .content {
     max-width: 60rem;
 }
 
-.content h3 {
-    color: #fff;
+.home h1 {
     font-size: 6rem;
+    line-height: 1.1;
     text-transform: uppercase;
 }
 
 .content p {
-    color: #fff;
     font-size: 2rem;
-    font-weight: 100;
+    font-weight: 300;
     line-height: 1.8;
     padding: 1rem 0;
 }
+
+/* ---------- Títulos das seções ---------- */
 
 .title {
     font-size: 4rem;
@@ -146,6 +236,8 @@ body {
     color: #fff;
 }
 
+/* ---------- Sobre ---------- */
+
 .about .row {
     display: flex;
     align-items: center;
@@ -153,18 +245,22 @@ body {
     gap: 1.5rem;
 }
 
+.about .row .container-image {
+    flex: 1 1 45rem;
+}
+
 .about .row .container-image img {
     display: block;
-    max-width: 100%;
+    width: 100%;
 }
 
 .about .row .content {
+    flex: 1 1 45rem;
     padding: 2rem;
 }
 
 .about .row .content h3 {
     font-size: 3rem;
-    text-transform: none;
 }
 
 .about .row .content p {
@@ -172,17 +268,18 @@ body {
     font-weight: 400;
 }
 
+/* ---------- Menu ---------- */
+
 .box-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(28rem, 1fr));
     gap: 1.5rem;
 }
 
 .menu .box-container .box {
     text-align: center;
     border: var(--border);
-    padding: 6rem 3rem;
-    cursor: pointer;
+    padding: 5rem 2rem;
     transition: background-color 0.2s;
 }
 
@@ -191,13 +288,11 @@ body {
 }
 
 .menu .box-container .box h3 {
-    color: #fff;
     font-size: 2rem;
     padding: 1rem 0;
 }
 
 .menu .box-container .box .price {
-    color: #fff;
     font-size: 2.5rem;
     padding: 0.5rem 0;
 }
@@ -212,13 +307,24 @@ body {
     background-color: #fff;
 }
 
-/* Agora funciona de verdade, porque --black é uma cor válida */
 .menu .box-container .box:hover h3,
 .menu .box-container .box:hover .price {
     color: var(--black);
 }
 
-/* CORREÇÃO: a borda agora fica em cada card, e não no container inteiro */
+/* Feedback rápido ao adicionar no carrinho */
+.add-cart.added {
+    background-color: #4c9a5a;
+}
+
+.empty-search {
+    text-align: center;
+    font-size: 1.8rem;
+    padding: 3rem 0;
+}
+
+/* ---------- Avaliações ---------- */
+
 .review .box-container .box {
     border: var(--border);
     text-align: center;
@@ -227,14 +333,13 @@ body {
 
 .review .box-container .box p {
     font-size: 1.5rem;
-    color: #fff;
     padding: 2rem 0;
     line-height: 1.8;
-    font-weight: lighter;
+    font-weight: 300;
+    font-style: italic;
 }
 
 .review .box-container .box h3 {
-    color: #fff;
     font-size: 2rem;
     margin: 1rem;
 }
@@ -246,12 +351,19 @@ body {
     object-fit: cover;
 }
 
-/* NOVO: estilo das estrelas (só é possível porque agora elas estão dentro da div) */
 .review .stars {
     display: flex;
     justify-content: center;
     gap: 0.3rem;
+    color: var(--main-color);
 }
+
+.review .stars svg {
+    width: 2.4rem;
+    height: 2.4rem;
+}
+
+/* ---------- Endereço ---------- */
 
 .address {
     display: flex;
@@ -259,7 +371,13 @@ body {
     flex-direction: column;
 }
 
-/* CORREÇÃO: mapa não tem mais largura fixa de 600px */
+.address-info {
+    font-size: 1.8rem;
+    line-height: 1.6;
+    text-align: center;
+    margin: -2rem 0 2rem;
+}
+
 .address iframe {
     width: 100%;
     max-width: 90rem;
@@ -267,24 +385,32 @@ body {
     border: 0;
 }
 
+/* ---------- Rodapé ---------- */
+
 .footer {
     text-align: center;
 }
 
 .footer .share {
+    display: flex;
+    justify-content: center;
+    gap: 0.6rem;
     padding: 1rem 0;
 }
 
 .footer .share a {
-    display: inline-block;
-    margin: 0.3rem;
-    padding: 1rem;
+    display: grid;
+    place-items: center;
+    width: 5rem;
+    height: 5rem;
     border-radius: 50%;
+    color: #fff;
     transition: background-color 0.2s;
 }
 
-.footer .share img {
-    display: block;
+.footer .share svg {
+    width: 2.6rem;
+    height: 2.6rem;
 }
 
 .footer .share a:hover {
@@ -292,8 +418,215 @@ body {
 }
 
 .footer .credit {
-    color: #fff;
     font-size: 1.4rem;
     font-weight: 300;
     padding-top: 1rem;
+}
+
+/* ---------- Carrinho lateral ---------- */
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.cart {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 101;
+    display: flex;
+    flex-direction: column;
+    width: min(40rem, 100%);
+    height: 100%;
+    padding: 2rem;
+    background: var(--black);
+    border-left: var(--border);
+    transform: translateX(100%);
+    visibility: hidden;
+    transition: transform 0.3s, visibility 0.3s;
+}
+
+.cart.active {
+    transform: translateX(0);
+    visibility: visible;
+}
+
+.cart-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 1.5rem;
+    border-bottom: var(--border);
+}
+
+.cart-header h2 {
+    font-size: 2.4rem;
+    color: var(--main-color);
+}
+
+.cart-items {
+    flex: 1;
+    overflow-y: auto;
+    list-style: none;
+}
+
+.cart-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem 0;
+    border-bottom: var(--border);
+    font-size: 1.6rem;
+}
+
+.cart-item .name {
+    flex: 1;
+}
+
+.cart-item .qty {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.cart-item .qty button {
+    width: 2.8rem;
+    height: 2.8rem;
+    background: none;
+    border: var(--border);
+    cursor: pointer;
+}
+
+.cart-item .qty button:hover {
+    border-color: var(--main-color);
+    color: var(--main-color);
+}
+
+.cart-item .subtotal {
+    min-width: 8rem;
+    text-align: right;
+}
+
+.cart-empty {
+    flex: 1;
+    padding-top: 3rem;
+    text-align: center;
+    font-size: 1.6rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.cart-footer {
+    padding-top: 1.5rem;
+    border-top: var(--border);
+}
+
+.cart-total {
+    font-size: 2rem;
+}
+
+.cart-footer .btn {
+    width: 100%;
+}
+
+.cart-footer .btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    letter-spacing: normal;
+}
+
+.cart-message {
+    min-height: 2rem;
+    padding-top: 1rem;
+    font-size: 1.5rem;
+    color: var(--main-color);
+}
+
+/* ---------- Responsividade ---------- */
+
+/* Notebooks e tablets grandes: tudo encolhe um pouco */
+@media (max-width: 991px) {
+    :root {
+        font-size: 55%;
+    }
+}
+
+/* Tablets e celulares: menu hambúrguer e "Sobre" empilhado */
+@media (max-width: 768px) {
+    #menu-btn {
+        display: grid;
+    }
+
+    .navbar {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: #fff;
+        clip-path: inset(0 0 100% 0);
+        transition: clip-path 0.2s;
+    }
+
+    .navbar.active {
+        clip-path: inset(0 0 0 0);
+    }
+
+    .navbar a {
+        display: block;
+        margin: 0;
+        padding: 1.8rem 2rem;
+        font-size: 2rem;
+        color: var(--black);
+        border-bottom: 0.1rem solid rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar a:hover {
+        color: var(--main-color);
+        border-bottom-color: rgba(0, 0, 0, 0.1);
+    }
+
+    .home h1 {
+        font-size: 4.5rem;
+    }
+
+    .about .row {
+        flex-direction: column;
+    }
+
+    .about .row .container-image,
+    .about .row .content {
+        flex-basis: auto;
+    }
+
+    .address iframe {
+        height: 35rem;
+    }
+}
+
+/* Celulares pequenos */
+@media (max-width: 450px) {
+    :root {
+        font-size: 50%;
+    }
+
+    .home h1 {
+        font-size: 3.8rem;
+    }
+
+    .box-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Respeita quem pediu menos animação no sistema */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    * {
+        transition: none !important;
+    }
 }
