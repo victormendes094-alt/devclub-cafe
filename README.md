@@ -2,7 +2,7 @@
 
 Landing page responsiva de uma cafeteria fictícia, com menu interativo, busca e carrinho de compras feitos em JavaScript puro.
 
-🔗 **Acesse o site:** _(cole aqui o link do GitHub Pages depois de publicar)_
+🔗 **Acesse o site:** https://victormendes094-alt.github.io/devclub-cafe/
 
 <!-- Dica: tire um print do site (desktop e celular), salve em imagens/ e troque esta linha por:
 ![Preview do site](imagens/preview.png) -->
@@ -32,7 +32,7 @@ Landing page responsiva de uma cafeteria fictícia, com menu interativo, busca e
 ## 🚀 Como rodar localmente
 
 ```bash
-git clone https://github.com/SEU-USUARIO/NOME-DO-REPO.git
+git clone https://github.com/victormendes094-alt/devclub-cafe.git
 ```
 
 Depois, abra o arquivo `index.html` no navegador. Se usar o VS Code, a extensão **Live Server** também funciona.
