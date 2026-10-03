@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="DevClub Café - o melhor café da região para quem programa.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- CORREÇÃO: removidas as fontes Righteous e Sarala, que não eram usadas -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;700&display=swap" rel="stylesheet">
+    <title>DevClub Café</title>
+</head>
+
+<body>
+    <header class="header">
+        <div class="container">
+            <a href="#home" class="logo">
+                <!-- CORREÇÃO: arquivo renomeado de logo(1).png para logo.png -->
+                <img src="./imagens/logo.png" alt="DevClub Café">
+            </a>
+
+            <nav class="navbar">
+                <a href="#home">Home</a>
+                <a href="#about">Sobre</a>
+                <a href="#menu">Menu</a>
+                <a href="#review">Avaliações</a>
+                <a href="#address">Endereço</a>
+            </nav> <!-- CORREÇÃO: era </nav class> -->
+
+            <!-- CORREÇÃO: ícones clicáveis viraram <button> com aria-label (acessibilidade) -->
+            <div class="icons">
+                <button type="button" aria-label="Buscar">
+                    <img width="30" height="30" src="https://img.icons8.com/ios-filled/50/ffffff/search--v1.png" alt="">
+                </button>
+                <button type="button" aria-label="Carrinho de compras">
+                    <img width="30" height="30" src="https://img.icons8.com/ios-glyphs/30/ffffff/shopping-cart--v1.png" alt="">
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- CORREÇÃO: id era "#home"; o # não faz parte do id -->
+        <section class="home" id="home">
+            <div class="container">
+                <div class="content">
+                    <h3>Code com o melhor café da região</h3>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti, laboriosam consectetur
+                        voluptates qui sunt exercitationem sint. Voluptas, quibusdam! Voluptas sed architecto repellat
+                        ab, vel consectetur fugiat exercitationem possimus earum.</p>
+                    <a href="#menu" class="btn">Pegue o seu agora</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="about container" id="about">
+            <h2 class="title">Sobre <span>Nós</span></h2>
+            <div class="row">
+                <div class="container-image">
+                    <img src="./imagens/about-img.jpg" alt="Interior da cafeteria">
+                </div>
+                <div class="content">
+                    <h3>O que faz nosso café especial</h3>
+                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis cumque quam vel
+                        exercitationem quae eum autem nulla quisquam. Necessitatibus, magnam repudiandae accusamus autem
+                        optio dolores reprehenderit maiores ipsum neque asperiores.</p>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus ad molestias officiis illo
+                        inventore quo amet aliquam quisquam. Architecto sed neque eius odio labore ratione voluptatum!
+                        Quia voluptates a officia?</p>
+                    <a href="#menu" class="btn">Saiba mais</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="menu container" id="menu">
+            <h2 class="title">Nosso <span>Menu</span></h2>
+            <div class="box-container">
+                <div class="box">
+                    <img src="./imagens/menu-1.png" alt="Xícara de café coado">
+                    <h3>Café Coado</h3>
+                    <div class="price">R$ 15,99 <span>R$ 20,99</span></div>
+                    <a href="#" class="btn">Adicione ao carrinho</a>
+                </div>
+                <div class="box">
+                    <img src="./imagens/menu-2.png" alt="Xícara de café meio amargo">
+                    <h3>Café Meio Amargo</h3>
+                    <div class="price">R$ 11,99 <span>R$ 15,99</span></div>
+                    <a href="#" class="btn">Adicione ao carrinho</a>
+                </div>
+                <div class="box">
+                    <img src="./imagens/menu-3.png" alt="Xícara de café médio">
+                    <h3>Café Médio</h3>
+                    <div class="price">R$ 10,99 <span>R$ 13,99</span></div>
+                    <a href="#" class="btn">Adicione ao carrinho</a>
+                </div>
+                <div class="box">
+                    <img src="./imagens/menu-4.png" alt="Caneca de Nescau quente">
+                    <h3>Nescau Quente</h3>
+                    <div class="price">R$ 5,99 <span>R$ 10,99</span></div>
+                    <a href="#" class="btn">Adicione ao carrinho</a>
+                </div>
+                <div class="box">
+                    <img src="./imagens/menu-5.png" alt="Xícara de café expresso">
+                    <h3>Café Expresso</h3>
+                    <div class="price">R$ 4,99 <span>R$ 5,99</span></div>
+                    <a href="#" class="btn">Adicione ao carrinho</a>
+                </div>
+                <div class="box">
+                    <img src="./imagens/menu-6.png" alt="Xícara de cappuccino">
+                    <h3>Cappuccino</h3>
+                    <div class="price">R$ 1,99 <span>R$ 3,99</span></div>
+                    <a href="#" class="btn">Adicione ao carrinho</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="review container" id="review">
+            <!-- CORREÇÃO: faltava class="title" (o título ficava preto no fundo preto, invisível) -->
+            <h2 class="title">Nossos <span>Clientes</span></h2>
+
+            <div class="box-container">
+                <div class="box">
+                    <img src="./imagens/quote-img.png" alt="" class="quote">
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus, tempore quod ullam
+                        voluptas veritatis fugiat fugit sunt fuga adipisci ex, optio minus eius veniam explicabo labore
+                        voluptates maiores dolores! Dolor.</p>
+                    <img src="./imagens/pic-1.png" alt="Foto de João da Silva" class="user">
+                    <h3>João da Silva</h3>
+                    <!-- CORREÇÃO: as estrelas agora ficam DENTRO da div .stars -->
+                    <div class="stars" aria-label="Nota 4,5 de 5">
+                        <img width="30" height="30" src="https://img.icons8.com/ios-filled/30/ffffff/star--v1.png" alt="">
+                        <img width="30" height="30" src="https://img.icons8.com/ios-filled/30/ffffff/star--v1.png" alt="">
+                        <img width="30" height="30" src="https://img.icons8.com/ios-filled/30/ffffff/star--v1.png" alt="">
+                        <img width="30" height="30" src="https://img.icons8.com/ios-filled/30/ffffff/star--v1.png" alt="">
+                        <img width="30" height="30" src="https://img.icons8.com/ios-filled/30/ffffff/star-half-empty.png" alt="">
+                    </div>
+                </div>
+
+                <div class="box">
+                    <img src="./imagens/quote-img.png" alt="" class="quote">
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus, tempore quod ullam
+                        voluptas veritatis fugiat fugit sunt fuga adipisci ex, optio minus eius veniam explicabo labore
+                        voluptates maiores dolores! Dolor.</p>
+                    <img src="./imagens/pic-2.png" alt="Foto de Rayssa Amaral" class="user">
+                    <h3>Rayssa Amaral</h3>
+                    <div class="stars" aria-label="Nota 4,5 de 5">
+                        <img width="30" height="30" src="https://img.icons8.com/ios-filled/30/ffffff/star--v1.png" alt="">
+                        <img width="30" height="30" src="https://img.icons8.com/ios-filled/30/ffffff/star--v1.png" alt="">
+                        <img width="30" height="30" src="https://img.icons8.com/ios-filled/30/ffffff/star--v1.png" alt="">
+                        <img width="30" height="30" src="https://img.icons8.com/ios-filled/30/ffffff/star--v1.png" alt="">
+                        <img width="30" height="30" src="https://img.icons8.com/ios-filled/30/ffffff/star-half-empty.png" alt="">
+                    </div>
+                </div>
+
+                <div class="box">
+                    <img src="./imagens/quote-img.png" alt="" class="quote">
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus, tempore quod ullam
+                        voluptas veritatis fugiat fugit sunt fuga adipisci ex, optio minus eius veniam explicabo labore
+                        voluptates maiores dolores! Dolor.</p>
+                    <img src="./imagens/pic-3.png" alt="Foto de Victor Mendes" class="user">
+                    <h3>Victor Mendes</h3>
+                    <div class="stars" aria-label="Nota 4,5 de 5">
+                        <img width="30" height="30" src="https://img.icons8.com/ios-filled/30/ffffff/star--v1.png" alt="">
+                        <img width="30" height="30" src="https://img.icons8.com/ios-filled/30/ffffff/star--v1.png" alt="">
+                        <img width="30" height="30" src="https://img.icons8.com/ios-filled/30/ffffff/star--v1.png" alt="">
+                        <img width="30" height="30" src="https://img.icons8.com/ios-filled/30/ffffff/star--v1.png" alt="">
+                        <img width="30" height="30" src="https://img.icons8.com/ios-filled/30/ffffff/star-half-empty.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </section> <!-- CORREÇÃO: review fechado aqui; antes ele englobava endereço e rodapé -->
+
+        <section class="address container" id="address">
+            <h2 class="title">Nosso <span>Endereço</span></h2>
+            <iframe title="Mapa com a localização da cafeteria"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14979.01814558451!2d-40.27647724458008!3d-20.185943299999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xb81ee54524bb09%3A0xa706a55f9f3b42a6!2sCaf%C3%A9%20Arrumado%20(Colina%20de%20Laranjeiras)%20-%20P%C3%A3o%2C%20Caf%C3%A9%20e%20Cuidado!5e0!3m2!1spt-BR!2sbr!4v1745574970108!5m2!1spt-BR!2sbr"
+                allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </section>
+    </main>
+
+    <!-- CORREÇÃO: rodapé virou <footer>, com links e texto de copyright -->
+    <footer class="footer container">
+        <div class="share">
+            <a href="#" aria-label="Instagram"><img width="30" height="30" src="https://img.icons8.com/ios-glyphs/30/ffffff/instagram-new.png" alt=""></a>
+            <a href="#" aria-label="Facebook"><img width="30" height="30" src="https://img.icons8.com/ios-glyphs/30/ffffff/facebook.png" alt=""></a>
+            <a href="#" aria-label="X (Twitter)"><img width="30" height="30" src="https://img.icons8.com/ios-glyphs/30/ffffff/twitterx--v1.png" alt=""></a>
+        </div>
+        <p class="credit">© 2026 DevClub Café. Todos os direitos reservados.</p>
+    </footer>
+</body>
+
+</html>
