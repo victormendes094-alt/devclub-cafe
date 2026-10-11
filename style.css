@@ -18,7 +18,17 @@ html {
     box-sizing: border-box;
     border: none;
     text-decoration: none;
-    font-family: "Roboto", sans-serif;
+    font-family: "Inter", sans-serif;
+}
+
+/* Títulos com fonte condensada e forte */
+h1,
+h2,
+h3,
+.btn {
+    font-family: "Oswald", sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.05rem;
 }
 
 body {
