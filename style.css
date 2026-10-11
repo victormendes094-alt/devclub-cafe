@@ -170,11 +170,16 @@ img {
     width: min(50rem, calc(100% - 4rem));
     background: #fff;
     clip-path: inset(0 0 100% 0);
-    transition: clip-path 0.2s;
+    /* visibility: hidden tira o campo do Tab enquanto está fechado */
+    visibility: hidden;
+    transition: clip-path 0.2s, visibility 0.2s;
 }
 
 .search-form.active {
     clip-path: inset(0 0 0 0);
+    visibility: visible;
+    /* Fica visível na hora ao abrir, para o campo poder receber o foco */
+    transition: clip-path 0.2s, visibility 0s;
 }
 
 .search-form input {
@@ -189,7 +194,7 @@ img {
 
 .btn {
     background: var(--main-color);
-    color: #fff;
+    color: var(--black); /* texto escuro: branco no dourado tinha contraste baixo (~2:1) */
     padding: 1rem 3rem;
     font-size: 1.7rem;
     cursor: pointer;
@@ -313,13 +318,21 @@ img {
     font-weight: lighter;
 }
 
-.menu .box-container .box:hover {
-    background-color: #fff;
+.menu .box-container .box h3,
+.menu .box-container .box .price {
+    transition: color 0.2s; /* acompanha a transição do fundo */
 }
 
-.menu .box-container .box:hover h3,
-.menu .box-container .box:hover .price {
-    color: var(--black);
+/* Só em aparelhos com mouse: no celular o "hover" ficava preso depois do toque */
+@media (hover: hover) {
+    .menu .box-container .box:hover {
+        background-color: #fff;
+    }
+
+    .menu .box-container .box:hover h3,
+    .menu .box-container .box:hover .price {
+        color: var(--black);
+    }
 }
 
 /* Feedback rápido ao adicionar no carrinho */
@@ -576,11 +589,15 @@ img {
         right: 0;
         background: #fff;
         clip-path: inset(0 0 100% 0);
-        transition: clip-path 0.2s;
+        /* visibility: hidden tira os links do Tab enquanto o menu está fechado */
+        visibility: hidden;
+        transition: clip-path 0.2s, visibility 0.2s;
     }
 
     .navbar.active {
         clip-path: inset(0 0 0 0);
+        visibility: visible;
+        transition: clip-path 0.2s, visibility 0s;
     }
 
     .navbar a {

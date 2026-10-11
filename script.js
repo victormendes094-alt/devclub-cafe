@@ -62,6 +62,9 @@ searchInput.addEventListener('input', () => {
     });
 
     emptySearch.hidden = found > 0;
+
+    // Leva até o menu para a pessoa ver o resultado da busca
+    if (term) document.getElementById('menu').scrollIntoView();
 });
 
 searchForm.addEventListener('submit', (event) => {
@@ -71,16 +74,32 @@ searchForm.addEventListener('submit', (event) => {
 });
 
 // ===== Carrinho =====
-// Formato: { "Café Coado": { price: 15.99, qty: 2 }, ... }
+// O carrinho guarda só nome e quantidade: { "Café Coado": 2, ... }
+// O preço é sempre lido do menu, então mudar um preço no HTML já vale para todo mundo.
+const prices = {};
+menuBoxes.forEach((box) => {
+    prices[box.dataset.name] = Number(box.dataset.price);
+});
+
 let cart = loadCart();
 
 // O localStorage pode estar bloqueado (aba anônima, por exemplo), então usamos try/catch
 function loadCart() {
+    let saved = {};
     try {
-        return JSON.parse(localStorage.getItem('devclub-cart')) || {};
+        saved = JSON.parse(localStorage.getItem('devclub-cart')) || {};
     } catch {
         return {};
     }
+
+    const clean = {};
+    Object.entries(saved).forEach(([name, value]) => {
+        // Aceita também o formato antigo { price, qty }
+        const qty = typeof value === 'object' ? value.qty : value;
+        // Ignora itens que não existem mais no menu
+        if (name in prices && qty > 0) clean[name] = qty;
+    });
+    return clean;
 }
 
 function saveCart() {
@@ -91,18 +110,14 @@ function saveCart() {
     }
 }
 
-function addToCart(name, price) {
-    if (cart[name]) {
-        cart[name].qty++;
-    } else {
-        cart[name] = { price, qty: 1 };
-    }
+function addToCart(name) {
+    cart[name] = (cart[name] || 0) + 1;
     updateCart();
 }
 
 function changeQty(name, delta) {
-    cart[name].qty += delta;
-    if (cart[name].qty <= 0) delete cart[name];
+    cart[name] += delta;
+    if (cart[name] <= 0) delete cart[name];
     updateCart();
 }
 
@@ -113,10 +128,10 @@ function updateCart() {
 
     cartItemsList.innerHTML = '';
 
-    entries.forEach(([name, item]) => {
-        const subtotal = item.price * item.qty;
+    entries.forEach(([name, qty]) => {
+        const subtotal = prices[name] * qty;
         total += subtotal;
-        count += item.qty;
+        count += qty;
 
         const li = document.createElement('li');
         li.className = 'cart-item';
@@ -124,7 +139,7 @@ function updateCart() {
             <span class="name"></span>
             <div class="qty">
                 <button type="button" data-delta="-1" aria-label="Remover um">−</button>
-                <span>${item.qty}</span>
+                <span>${qty}</span>
                 <button type="button" data-delta="1" aria-label="Adicionar um">+</button>
             </div>
             <span class="subtotal">${formatPrice(subtotal)}</span>
@@ -162,7 +177,7 @@ function toggleCart(open) {
 document.querySelectorAll('.add-cart').forEach((btn) => {
     btn.addEventListener('click', () => {
         const box = btn.closest('.box');
-        addToCart(box.dataset.name, Number(box.dataset.price));
+        addToCart(box.dataset.name);
 
         // Feedback visual de 1 segundo no botão
         btn.textContent = 'Adicionado ✓';
