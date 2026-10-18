@@ -18,17 +18,15 @@ html {
     box-sizing: border-box;
     border: none;
     text-decoration: none;
-    font-family: "Inter", sans-serif;
+    /* Fonte padrão do sistema: Segoe UI (Windows), San Francisco (Apple), Roboto (Android) */
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
 }
 
-/* Títulos com fonte condensada e forte */
 h1,
 h2,
 h3,
 .btn {
-    font-family: "Oswald", sans-serif;
     font-weight: 600;
-    letter-spacing: 0.05rem;
 }
 
 body {
